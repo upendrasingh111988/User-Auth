@@ -5,6 +5,8 @@ import com.userServiceAuth.model.User;
 import com.userServiceAuth.repository.UserRepository;
 import com.userServiceAuth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    // Get user by ID with caching
+    @Cacheable(value = "/v1/api/users", key = "#userId")
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElseThrow(()-> new  ResourceNotFoundException("User is not found for this:"+ userId));
     }
@@ -30,6 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    // Update user and refresh cache
+
     public User updateUser(User user) {
         return userRepository.save(user);
     }
