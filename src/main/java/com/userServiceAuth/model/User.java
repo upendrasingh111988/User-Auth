@@ -1,13 +1,17 @@
 package com.userServiceAuth.model;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_info")
 public class User {
+    @Id
     private String userId;
     private String userName;
+    @Embedded
     private Address address;
 
     public User() {

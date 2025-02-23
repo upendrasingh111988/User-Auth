@@ -1,12 +1,17 @@
 package com.userServiceAuth.model;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Embeddable
 public class Address {
     private String city;
+
     private String pinCode;
 
-    public Address(String city, String pinCode) {
-        this.city = city;
-        this.pinCode = pinCode;
+    public Address() {
     }
 
     public String getCity() {
