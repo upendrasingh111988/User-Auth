@@ -1,10 +1,23 @@
 spring:
-  name: Auth-User
+
   datasource:
     url: jdbc:mysql://localhost:3306/authUser
     username: root
     password: Upen@1988
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oanjlp3wheuj9OJv5d7
+            client-secret: ffz-Hl0fSOgkLUoofIOT-QFyJjgm2JLkey1TSEhRELAQ3a9iOAsqyrOY4iWwwapc
+
+        provider:
+          okta:
+            issuer-uri: https://dev-59401106.okta.com/oauth2/default
+
 
   jpa:
     hibernate:

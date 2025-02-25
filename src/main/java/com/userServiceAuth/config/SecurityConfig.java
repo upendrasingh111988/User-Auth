@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 
 @Configuration
 public class SecurityConfig {
@@ -23,8 +25,8 @@ public class SecurityConfig {
 
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+   /* @Bean
+    public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) //  Correct way in Spring Security 6.1+
                 .authorizeHttpRequests(auth -> auth
@@ -33,6 +35,18 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }*/
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/public").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(withDefaults()); // Enables Okta OAuth 2.0 login
 
         return http.build();
     }
