@@ -39,7 +39,7 @@ public class SecurityConfig {
         return http.build();
     }*/
 
-    @Bean
+/*    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
@@ -47,6 +47,20 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(withDefaults()); // Enables Okta OAuth 2.0 login
+
+        return http.build();
+    }*/
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/public").permitAll()  // Public endpoints
+                        .requestMatchers("/api/user").authenticated() // OAuth2 Login required
+                        .requestMatchers("/api/protected").authenticated() // JWT required
+                )
+                .oauth2Login(withDefaults())  // OAuth2 Login support
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults())); // Enable JWT auth
 
         return http.build();
     }
